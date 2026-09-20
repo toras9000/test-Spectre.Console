@@ -1,0 +1,29 @@
+#!/usr/bin/env -S dotnet run --file 
+#:package Spectre.Console@0.57.2
+#:package Spectre.Console.Json@0.57.2
+#:package Lestaly.General@0.147.0
+using Lestaly;
+using Spectre.Console;
+using Spectre.Console.Json;
+
+return await Paved.ProceedAsync(async () =>
+{
+    var json = """
+    {
+        "string": "Hello World",
+        "number": 42,
+        "boolean": true,
+        "null": null,
+        "decimal": 3.14159
+    }
+    """;
+    
+    var jsonText = new JsonText(json)
+        .StringColor(Color.Green)
+        .NumberColor(Color.Blue)
+        .BooleanColor(Color.Yellow)
+        .NullColor(Color.Red);
+    
+    AnsiConsole.Write(jsonText);
+    AnsiConsole.WriteLine();
+});

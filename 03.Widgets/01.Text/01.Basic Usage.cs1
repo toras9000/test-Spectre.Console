@@ -1,0 +1,18 @@
+#!/usr/bin/env -S dotnet run --file 
+#:package Spectre.Console@0.57.2
+#:package Lestaly.General@0.147.0
+using Lestaly;
+using Spectre.Console;
+
+return await Paved.ProceedAsync(async () =>
+{
+    // Plain text
+    var plain = new Text("Hello, World223!");
+    AnsiConsole.Write(plain);
+    AnsiConsole.WriteLine();
+
+    // Text with style in constructor
+    var styled = new Text("Styled Text", new Style(foreground: Color.Blue));
+    AnsiConsole.Write(styled);
+    AnsiConsole.WriteLine();
+});

@@ -1,0 +1,32 @@
+#!/usr/bin/env -S dotnet run --file 
+#:package Spectre.Console@0.57.2
+#:package Lestaly.General@0.147.0
+using Lestaly;
+using Spectre.Console;
+
+return await Paved.ProceedAsync(async () =>
+{
+    {
+        var panel = new Panel(new Rows(
+            new Text("Left aligned text").LeftJustified(),
+            Text.NewLine,
+            new Text("Center aligned text").Centered(),
+            Text.NewLine,
+            new Text("Right aligned text").RightJustified()
+        ))
+        .Header("Text Justification")
+        .Expand();
+
+        AnsiConsole.Write(panel);
+    }
+    {
+        var panel = new Panel(new Rows(
+                new Text("Left") { Justification = Justify.Left },
+                new Text("Center") { Justification = Justify.Center },
+                new Text("Right") { Justification = Justify.Right }
+            ))
+            .Expand();
+
+        AnsiConsole.Write(panel);
+    }
+});

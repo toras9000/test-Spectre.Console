@@ -1,0 +1,30 @@
+#!/usr/bin/env -S dotnet run --file 
+#:package Spectre.Console@0.57.2
+#:package Lestaly.General@0.147.0
+using Lestaly;
+using Spectre.Console;
+
+return await Paved.ProceedAsync(async () =>
+{
+    var singleLine = new Text("Hello, World!");
+    var multiLine = new Text("Line 1\nLine 2\nLine 3");
+
+    var table = new Table()
+        .AddColumn("Text")
+        .AddColumn("Length")
+        .AddColumn("Lines");
+
+    table.AddRow(
+        new Text("\"Hello, World!\""),
+        new Text(singleLine.Length.ToString()),
+        new Text(singleLine.Lines.ToString())
+    );
+
+    table.AddRow(
+        new Text("\"Line 1\\nLine 2\\nLine 3\""),
+        new Text(multiLine.Length.ToString()),
+        new Text(multiLine.Lines.ToString())
+    );
+
+    AnsiConsole.Write(table);
+});

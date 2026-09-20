@@ -1,0 +1,24 @@
+#!/usr/bin/env -S dotnet run --file 
+#:package Spectre.Console@0.57.2
+#:package Spectre.Console.Json@0.57.2
+#:package Lestaly.General@0.147.0
+using Lestaly;
+using Spectre.Console;
+using Spectre.Console.Json;
+
+return await Paved.ProceedAsync(async () =>
+{
+    var json = """
+    {
+        "important": "This is critical",
+        "count": 99
+    }
+    """;
+    
+    var jsonText = new JsonText(json)
+        .MemberStyle(new Style(Color.Yellow, decoration: Decoration.Bold))
+        .StringStyle(new Style(Color.Green, decoration: Decoration.Italic));
+    
+    AnsiConsole.Write(jsonText);
+    AnsiConsole.WriteLine();
+});

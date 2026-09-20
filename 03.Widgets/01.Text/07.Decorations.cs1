@@ -1,0 +1,37 @@
+#!/usr/bin/env -S dotnet run --file 
+#:package Spectre.Console@0.57.2
+#:package Lestaly.General@0.147.0
+using Lestaly;
+using Spectre.Console;
+
+return await Paved.ProceedAsync(async () =>
+{
+    {
+        var decorations = new[]
+        {
+            ("Bold", Decoration.Bold), ("Italic", Decoration.Italic), ("Underline", Decoration.Underline),
+            ("Strikethrough", Decoration.Strikethrough),
+        };
+
+        foreach (var (name, decoration) in decorations)
+        {
+            var text = new Text(name, new Style(decoration: decoration));
+            AnsiConsole.Write(text);
+            AnsiConsole.WriteLine();
+        }
+    }
+    {
+        var decorations = new[]
+        {
+            ("Dim", Decoration.Dim), ("Invert", Decoration.Invert), ("Conceal", Decoration.Conceal),
+            ("Slow Blink", Decoration.SlowBlink), ("Rapid Blink", Decoration.RapidBlink),
+        };
+
+        foreach (var (name, decoration) in decorations)
+        {
+            var text = new Text($"{name} (may not be supported in all terminals)", new Style(decoration: decoration));
+            AnsiConsole.Write(text);
+            AnsiConsole.WriteLine();
+        }
+    }
+});

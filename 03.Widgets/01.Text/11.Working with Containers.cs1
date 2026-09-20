@@ -1,0 +1,36 @@
+#!/usr/bin/env -S dotnet run --file 
+#:package Spectre.Console@0.57.2
+#:package Lestaly.General@0.147.0
+using Lestaly;
+using Spectre.Console;
+
+return await Paved.ProceedAsync(async () =>
+{
+    // Text in a panel
+    var panel = new Panel(
+            new Text("This is text inside a panel", new Style(foreground: Color.Yellow))
+        )
+        .Header("Panel with Text")
+        .BorderColor(Color.Blue);
+    
+    AnsiConsole.Write(panel);
+    AnsiConsole.WriteLine();
+    
+    // Text in a table
+    var table = new Table()
+        .RoundedBorder()
+        .AddColumn("Property")
+        .AddColumn("Value");
+    
+    table.AddRow(
+        new Text("Name", new Style(decoration: Decoration.Bold)),
+        new Text("Application", new Style(foreground: Color.Green))
+    );
+    
+    table.AddRow(
+        new Text("Status", new Style(decoration: Decoration.Bold)),
+        new Text("Running", new Style(foreground: Color.Green, decoration: Decoration.Bold))
+    );
+    
+    AnsiConsole.Write(table);
+});

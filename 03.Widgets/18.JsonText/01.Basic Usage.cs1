@@ -1,0 +1,23 @@
+#!/usr/bin/env -S dotnet run --file 
+#:package Spectre.Console@0.57.2
+#:package Spectre.Console.Json@0.57.2
+#:package Lestaly.General@0.147.0
+using Lestaly;
+using Spectre.Console;
+using Spectre.Console.Json;
+
+return await Paved.ProceedAsync(async () =>
+{
+    var json = """
+    {
+        "name": "Spectre.Console",
+        "version": "0.54.0",
+        "active": true,
+        "downloads": 15000000
+    }
+    """;
+
+    var jsonText = new JsonText(json);
+    AnsiConsole.Write(jsonText);
+    AnsiConsole.WriteLine();
+});

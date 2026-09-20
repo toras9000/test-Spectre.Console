@@ -1,0 +1,29 @@
+#!/usr/bin/env -S dotnet run --file 
+#:package Spectre.Console@0.57.2
+#:package Spectre.Console.Json@0.57.2
+#:package Lestaly.General@0.147.0
+using Lestaly;
+using Spectre.Console;
+using Spectre.Console.Json;
+
+return await Paved.ProceedAsync(async () =>
+{
+    var json = """
+    {
+        "api": "https://api.example.com",
+        "timeout": 30,
+        "retries": 3,
+        "enabled": true
+    }
+    """;
+    
+    var jsonText = new JsonText(json);
+    
+    var panel = new Panel(jsonText)
+        .Header("[yellow]Configuration[/]")
+        .BorderColor(Color.Grey)
+        .Padding(1, 1);
+    
+    AnsiConsole.Write(panel);
+    AnsiConsole.WriteLine();
+});

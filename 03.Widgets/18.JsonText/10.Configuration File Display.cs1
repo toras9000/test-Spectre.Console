@@ -1,0 +1,43 @@
+#!/usr/bin/env -S dotnet run --file 
+#:package Spectre.Console@0.57.2
+#:package Spectre.Console.Json@0.57.2
+#:package Lestaly.General@0.147.0
+using Lestaly;
+using Spectre.Console;
+using Spectre.Console.Json;
+
+return await Paved.ProceedAsync(async () =>
+{
+    var json = """
+    {
+        "database": {
+            "host": "localhost",
+            "port": 5432,
+            "name": "myapp_db",
+            "ssl": true
+        },
+        "cache": {
+            "enabled": true,
+            "ttl": 3600,
+            "provider": "redis"
+        },
+        "logging": {
+            "level": "info",
+            "output": "console"
+        }
+    }
+    """;
+    
+    var jsonText = new JsonText(json)
+        .MemberColor(Color.Yellow)
+        .StringColor(Color.White)
+        .NumberColor(Color.Aqua)
+        .BooleanColor(Color.Lime);
+    
+    var panel = new Panel(jsonText)
+        .Header("[green]app.config.json[/]")
+        .BorderColor(Color.Green);
+    
+    AnsiConsole.Write(panel);
+    AnsiConsole.WriteLine();
+});

@@ -1,0 +1,37 @@
+#!/usr/bin/env -S dotnet run --file 
+#:package Spectre.Console@0.57.2
+#:package Spectre.Console.Json@0.57.2
+#:package Lestaly.General@0.147.0
+using Lestaly;
+using Spectre.Console;
+using Spectre.Console.Json;
+
+return await Paved.ProceedAsync(async () =>
+{
+    var json = """
+    {
+        "status": "success",
+        "data": {
+            "id": "usr_1234567890",
+            "email": "user@example.com",
+            "verified": true,
+            "created_at": "2024-01-15T10:30:00Z",
+            "permissions": ["read", "write"]
+        },
+        "metadata": {
+            "request_id": "req_abc123",
+            "duration_ms": 45
+        }
+    }
+    """;
+    
+    var jsonText = new JsonText(json)
+        .MemberColor(Color.Cyan)
+        .StringColor(Color.Green)
+        .NumberColor(Color.Blue)
+        .BooleanColor(Color.Yellow);
+    
+    AnsiConsole.MarkupLine("[bold]API Response:[/]");
+    AnsiConsole.Write(jsonText);
+    AnsiConsole.WriteLine();
+});

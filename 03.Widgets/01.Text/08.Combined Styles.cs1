@@ -1,0 +1,31 @@
+#!/usr/bin/env -S dotnet run --file 
+#:package Spectre.Console@0.57.2
+#:package Lestaly.General@0.147.0
+using Lestaly;
+using Spectre.Console;
+
+return await Paved.ProceedAsync(async () =>
+{
+    // Multiple decorations combined using flags
+    var multiDeco = new Text(
+        "Bold, Italic, and Underlined",
+        new Style(
+            foreground: Color.Green,
+            decoration: Decoration.Bold | Decoration.Italic | Decoration.Underline
+        )
+    );
+    AnsiConsole.Write(multiDeco);
+    AnsiConsole.WriteLine();
+
+    // Full style: foreground, background, and decoration
+    var fullStyle = new Text(
+        "Complete Style",
+        new Style(
+            foreground: Color.White,
+            background: Color.DarkBlue,
+            decoration: Decoration.Bold
+        )
+    );
+    AnsiConsole.Write(fullStyle);
+    AnsiConsole.WriteLine();
+});

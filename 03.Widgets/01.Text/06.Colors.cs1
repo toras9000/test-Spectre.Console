@@ -1,0 +1,23 @@
+#!/usr/bin/env -S dotnet run --file 
+#:package Spectre.Console@0.57.2
+#:package Lestaly.General@0.147.0
+using Lestaly;
+using Spectre.Console;
+
+return await Paved.ProceedAsync(async () =>
+{
+    // Foreground color only
+    var foreground = new Text("Blue text", new Style(foreground: Color.Blue));
+    AnsiConsole.Write(foreground);
+    AnsiConsole.WriteLine();
+
+    // Background color only
+    var background = new Text("Yellow background", new Style(background: Color.Yellow));
+    AnsiConsole.Write(background);
+    AnsiConsole.WriteLine();
+
+    // Both foreground and background
+    var both = new Text("White on Red", new Style(foreground: Color.White, background: Color.Red));
+    AnsiConsole.Write(both);
+    AnsiConsole.WriteLine();
+});

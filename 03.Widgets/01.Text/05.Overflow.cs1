@@ -1,0 +1,37 @@
+#!/usr/bin/env -S dotnet run --file 
+#:package Spectre.Console@0.57.2
+#:package Lestaly.General@0.147.0
+using Lestaly;
+using Spectre.Console;
+
+return await Paved.ProceedAsync(async () =>
+{
+    {
+        var longText = "This is a very long piece of text that will demonstrate different overflow behaviors";
+
+        var panel = new Panel(new Rows(
+            new Markup("[yellow]Fold (wrap):[/]"),
+            new Text(longText).Overflow(Overflow.Fold),
+            Text.NewLine,
+            new Markup("[yellow]Crop (truncate):[/]"),
+            new Text(longText).Overflow(Overflow.Crop),
+            Text.NewLine,
+            new Markup("[yellow]Ellipsis:[/]"),
+            new Text(longText).Overflow(Overflow.Ellipsis)
+        ))
+        { Width = 40 };
+
+        AnsiConsole.Write(panel);
+    }
+    {
+        var longText = "This is a very long piece of text";
+
+        var fold = new Text(longText) { Overflow = Overflow.Fold };
+        var crop = new Text(longText) { Overflow = Overflow.Crop };
+        var ellipsis = new Text(longText) { Overflow = Overflow.Ellipsis };
+
+        var panel = new Panel(new Rows(fold, crop, ellipsis)) { Width = 30 };
+
+        AnsiConsole.Write(panel);
+    }
+});

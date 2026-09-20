@@ -1,0 +1,27 @@
+#!/usr/bin/env -S dotnet run --file 
+#:package Spectre.Console@0.57.2
+#:package Lestaly.General@0.145.0
+using Lestaly;
+using Spectre.Console;
+
+return await Paved.ProceedAsync(async () =>
+{
+    var spinner = new Table()
+        .AddColumn("Status")
+        .AddRow("[blue]Processing...[/]");
+
+    AnsiConsole.Live(spinner)
+        .AutoClear(true)
+        .Start(ctx =>
+        {
+            for (int i = 1; i <= 5; i++)
+            {
+                spinner.Rows.Clear();
+                spinner.AddRow($"[blue]Processing step {i}/5...[/]");
+                ctx.Refresh();
+                Thread.Sleep(800);
+            }
+        });
+
+    AnsiConsole.WriteLine("Display cleared - task complete!");
+});

@@ -1,0 +1,33 @@
+#!/usr/bin/env -S dotnet run --file 
+#:package Spectre.Console@0.57.2
+#:package Lestaly.General@0.145.0
+using Lestaly;
+using Spectre.Console;
+
+return await Paved.ProceedAsync(async () =>
+{
+    AnsiConsole.MarkupLine("[yellow bold]Time for coffee![/]");
+    AnsiConsole.WriteLine();
+
+    AnsiConsole.Status()
+        .Spinner(Spinner.Known.Dots)
+        .SpinnerStyle(Style.Parse("yellow"))
+        .Start("Grinding beans...", ctx =>
+        {
+            Thread.Sleep(2000);
+
+            ctx.Spinner(Spinner.Known.Star);
+            ctx.SpinnerStyle(Style.Parse("blue"));
+            ctx.Status("Brewing coffee...");
+            Thread.Sleep(2500);
+
+            ctx.Spinner(Spinner.Known.Arc);
+            ctx.SpinnerStyle(Style.Parse("green"));
+            ctx.Status("Pouring into cup...");
+            Thread.Sleep(1500);
+        });
+
+    AnsiConsole.WriteLine();
+    AnsiConsole.MarkupLine("[green]Your coffee is ready! Enjoy![/]");
+
+});

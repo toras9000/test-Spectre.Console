@@ -1,0 +1,33 @@
+#!/usr/bin/env -S dotnet run --file 
+#:package Spectre.Console@0.57.2
+#:package Lestaly.General@0.145.0
+using Lestaly;
+using Spectre.Console;
+
+return await Paved.ProceedAsync(async () =>
+{
+    var books = new[]
+    {
+        new Book { Title = "The Great Gatsby", Author = "F. Scott Fitzgerald", Year = 1925 },
+        new Book { Title = "To Kill a Mockingbird", Author = "Harper Lee", Year = 1960 },
+        new Book { Title = "1984", Author = "George Orwell", Year = 1949 },
+        new Book { Title = "Pride and Prejudice", Author = "Jane Austen", Year = 1813 },
+        new Book { Title = "The Catcher in the Rye", Author = "J.D. Salinger", Year = 1951 }
+    };
+
+    var selectedBook = AnsiConsole.Prompt(
+        new SelectionPrompt<Book>()
+            .Title("Select a [green]book[/]")
+            .PageSize(10)
+            .UseConverter(book => $"{book.Title} by {book.Author} ({book.Year})")
+            .AddChoices(books));
+
+    AnsiConsole.MarkupLine($"You selected: [yellow]{selectedBook.Title}[/]");
+});
+
+class Book
+{
+    public required string Title { get; init; }
+    public required string Author { get; init; }
+    public int Year { get; init; }
+}

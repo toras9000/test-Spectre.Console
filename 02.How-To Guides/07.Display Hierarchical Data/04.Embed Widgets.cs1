@@ -1,0 +1,28 @@
+#!/usr/bin/env -S dotnet run --file 
+#:package Spectre.Console@0.57.2
+#:package Lestaly.General@0.145.0
+using Lestaly;
+using Spectre.Console;
+
+return await Paved.ProceedAsync(async () =>
+{
+    var tree = new Tree("[yellow]Components[/]")
+        .Guide(TreeGuide.Line);
+
+    var header = new Panel("[bold]Navigation Bar[/]")
+        .BorderColor(Color.Blue)
+        .Padding(1, 0);
+    tree.AddNode(header);
+
+    var content = new Panel("[bold]Main Content[/]")
+        .BorderColor(Color.Green)
+        .Padding(1, 0);
+    tree.AddNode(content);
+
+    var footer = new Panel("[bold]Footer[/]")
+        .BorderColor(Color.Grey)
+        .Padding(1, 0);
+    tree.AddNode(footer);
+
+    AnsiConsole.Write(tree);
+});

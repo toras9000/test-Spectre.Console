@@ -1,0 +1,53 @@
+#!/usr/bin/env -S dotnet run --file 
+#:package Spectre.Console@0.57.2
+#:package Lestaly.General@0.145.0
+using Lestaly;
+using Spectre.Console;
+
+return await Paved.ProceedAsync(async () =>
+{
+    AnsiConsole.MarkupLine("[bold yellow]Welcome to Spectre Pizza![/]");
+    AnsiConsole.WriteLine();
+
+    // Ask for name
+    var name = AnsiConsole.Ask<string>("What's your [green]name[/]?");
+
+    // Choose size
+    var size = AnsiConsole.Prompt(
+        new SelectionPrompt<string>()
+            .Title("What [green]size pizza[/] would you like?")
+            .AddChoices("Small", "Medium", "Large", "Extra Large"));
+
+    // Select toppings
+    var toppings = AnsiConsole.Prompt(
+        new MultiSelectionPrompt<string>()
+            .Title("What [green]toppings[/] would you like?")
+            .NotRequired()
+            .InstructionsText("[grey](Press [blue]<space>[/] to toggle, [green]<enter>[/] to confirm)[/]")
+            .AddChoices("Pepperoni", "Mushrooms", "Sausage",
+                "Onions", "Green Peppers", "Black Olives",
+                "Extra Cheese", "Bacon", "Pineapple"));
+
+    // Show order summary
+    AnsiConsole.WriteLine();
+    var panel = new Panel(
+            new Rows(
+                new Markup($"[bold]Customer:[/] {name}"),
+                new Markup($"[bold]Size:[/]     {size}"),
+                new Markup($"[bold]Toppings:[/] {(toppings.Count > 0 ? string.Join(", ", toppings) : "Plain cheese")}")))
+        .Header("[yellow]Order Summary[/]")
+        .Border(BoxBorder.Rounded);
+    AnsiConsole.Write(panel);
+    AnsiConsole.WriteLine();
+
+    // Confirm order
+    if (AnsiConsole.Confirm("Place this order?"))
+    {
+        AnsiConsole.MarkupLine($"[green]Order placed! Thanks, {name}![/]");
+    }
+    else
+    {
+        AnsiConsole.MarkupLine("[yellow]Order cancelled.[/]");
+    }
+
+});

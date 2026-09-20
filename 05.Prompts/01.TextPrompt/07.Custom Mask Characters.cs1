@@ -1,0 +1,20 @@
+#!/usr/bin/env -S dotnet run --file 
+#:package Spectre.Console@0.57.2
+#:package Lestaly.General@0.145.0
+using Lestaly;
+using Spectre.Console;
+
+return await Paved.ProceedAsync(async () =>
+{
+    var pin = new TextPrompt<string>("Enter your [green]PIN[/]:")
+        .Secret('#');
+
+    var invisible = new TextPrompt<string>("Enter [green]secret code[/]:")
+        .Secret(null);
+
+    var pinResult = AnsiConsole.Prompt(pin);
+    var codeResult = AnsiConsole.Prompt(invisible);
+
+    AnsiConsole.MarkupLine($"PIN entered (length: [blue]{pinResult.Length}[/])");
+    AnsiConsole.MarkupLine($"Code entered (length: [blue]{codeResult.Length}[/])");
+});

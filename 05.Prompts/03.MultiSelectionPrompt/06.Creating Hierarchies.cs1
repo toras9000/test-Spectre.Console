@@ -1,0 +1,29 @@
+#!/usr/bin/env -S dotnet run --file 
+#:package Spectre.Console@0.57.2
+#:package Lestaly.General@0.145.0
+using Lestaly;
+using Spectre.Console;
+
+return await Paved.ProceedAsync(async () =>
+{
+    var prompt = new MultiSelectionPrompt<string>()
+        .Title("Select [green]permissions[/] to grant:");
+
+    prompt.AddChoice("Admin");
+    prompt.AddChoice("Users")
+        .AddChild("View Users")
+        .AddChild("Create Users")
+        .AddChild("Delete Users");
+    prompt.AddChoice("Content")
+        .AddChild("View Content")
+        .AddChild("Edit Content")
+        .AddChild("Publish Content");
+
+    var selected = AnsiConsole.Prompt(prompt);
+
+    AnsiConsole.WriteLine("Granted permissions:");
+    foreach (var permission in selected)
+    {
+        AnsiConsole.WriteLine($"- {permission}");
+    }
+});

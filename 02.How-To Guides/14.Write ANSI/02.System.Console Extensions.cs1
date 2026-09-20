@@ -1,0 +1,21 @@
+#!/usr/bin/env -S dotnet run --file 
+#:package Spectre.Console@0.57.2
+#:package Lestaly.General@0.145.0
+using Lestaly;
+using Spectre.Console;
+
+return await Paved.ProceedAsync(async () =>
+{
+    Console.Markup("[yellow]Hello[/] ");
+    Console.MarkupLine("[blue]World[/]");
+
+    Console.Ansi(writer => writer
+        .BeginLink("https://spectreconsole.net", linkId: 123)
+        .Decoration(Decoration.Bold | Decoration.Italic)
+        .Foreground(Color.Yellow)
+        .Write("Spectre Console")
+        .ResetStyle()
+        .EndLink()
+        .WriteLine()
+    );
+});

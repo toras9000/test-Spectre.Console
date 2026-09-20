@@ -1,0 +1,22 @@
+#!/usr/bin/env -S dotnet run --file 
+#:package Spectre.Console@0.57.2
+#:package Lestaly.General@0.145.0
+using Lestaly;
+using Spectre.Console;
+
+return await Paved.ProceedAsync(async () =>
+{
+    var columns = new Columns(new Spectre.Console.Rendering.IRenderable[]
+    {
+        new Table()
+            .Border(TableBorder.Rounded)
+            .AddColumn("Feature")
+            .AddColumn("Status")
+            .AddRow("Auth", "[green]Done[/]")
+            .AddRow("API", "[yellow]In Progress[/]"),
+        new Panel("[blue]Next up:[/]\n• Deployment\n• Testing"),
+        new Markup("[red]Blocked:[/]\n• Code review\n• QA approval")
+    });
+
+    AnsiConsole.Write(columns);
+});

@@ -1,0 +1,57 @@
+#!/usr/bin/env -S dotnet run --file 
+#:package Spectre.Console@0.57.2
+#:package Lestaly.General@0.145.0
+using Lestaly;
+using Spectre.Console;
+
+return await Paved.ProceedAsync(async () =>
+{
+    AnsiConsole.MarkupLine("[bold yellow]LOADING GAME[/]");
+    AnsiConsole.WriteLine();
+
+    AnsiConsole.Progress()
+        .Columns(
+            new SpinnerColumn(),
+            new TaskDescriptionColumn(),
+            new ProgressBarColumn
+            {
+                CompletedStyle = new Style(Color.Green),
+                FinishedStyle = new Style(Color.Lime),
+                RemainingStyle = new Style(Color.Grey)
+            },
+            new PercentageColumn(),
+            new ElapsedTimeColumn())
+        .Start(ctx =>
+        {
+            var worldMap = ctx.AddTask("Loading World Map", maxValue: 200);
+            var character = ctx.AddTask("Loading Character Data");
+            var sounds = ctx.AddTask("Loading Sound Effects", maxValue: 50);
+            // Textures won't start until we call StartTask()
+            var textures = ctx.AddTask("Loading Textures", autoStart: false);
+
+            var random = new Random(42);
+            while (!ctx.IsFinished)
+            {
+                worldMap.Increment(random.NextDouble() * 3);
+                character.Increment(random.NextDouble() * 1.5);
+                sounds.Increment(random.NextDouble() * 1.5);
+
+                // Start textures once world map reaches 25%
+                if (worldMap.Percentage >= 25 && !textures.IsStarted)
+                {
+                    textures.StartTask();
+                }
+
+                if (textures.IsStarted)
+                {
+                    textures.Increment(random.NextDouble() * 2);
+                }
+
+                Thread.Sleep(50);
+            }
+        });
+
+    AnsiConsole.WriteLine();
+    AnsiConsole.MarkupLine("[bold lime]PRESS ANY KEY TO START[/]");
+
+});

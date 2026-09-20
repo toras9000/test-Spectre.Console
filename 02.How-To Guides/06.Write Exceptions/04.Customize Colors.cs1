@@ -1,0 +1,29 @@
+#!/usr/bin/env -S dotnet run --file 
+#:package Spectre.Console@0.57.2
+#:package Lestaly.General@0.145.0
+#:property PublishAot=false
+using Lestaly;
+using Spectre.Console;
+
+return await Paved.ProceedAsync(async () =>
+{
+    try
+    {
+        new Action(() => throw new InvalidOperationException("test-exception", new NotSupportedException("inner-exception"))).Invoke();
+    }
+    catch (Exception ex)
+    {
+        AnsiConsole.WriteException(ex, new ExceptionSettings
+        {
+            Format = ExceptionFormats.ShortenEverything,
+            Style = new ExceptionStyle
+            {
+                Exception = new Style(Color.Grey),
+                Message = new Style(Color.White),
+                Method = new Style(Color.Red),
+                Path = new Style(Color.Yellow),
+                LineNumber = new Style(Color.Blue),
+            }
+        });
+    }
+});

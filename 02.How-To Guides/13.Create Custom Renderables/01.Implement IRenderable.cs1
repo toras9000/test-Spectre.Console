@@ -1,0 +1,50 @@
+#!/usr/bin/env -S dotnet run --file 
+#:package Spectre.Console@0.57.2
+#:package Lestaly.General@0.145.0
+using Lestaly;
+using Spectre.Console;
+using Spectre.Console.Rendering;
+
+return await Paved.ProceedAsync(async () =>
+{
+    var success = new Label("OK", Color.White, Color.Green);
+    var warning = new Label("WARN", Color.Black, Color.Yellow);
+    var error = new Label("ERROR", Color.White, Color.Red);
+
+    AnsiConsole.Write(success);
+    AnsiConsole.Write(" ");
+    AnsiConsole.Write(warning);
+    AnsiConsole.Write(" ");
+    AnsiConsole.Write(error);
+    AnsiConsole.WriteLine();
+});
+
+public class Label : IRenderable
+{
+    public Label(string text)
+        : this(text, Color.Black, Color.Grey)
+    {
+    }
+
+    public Label(string text, Color foreground, Color background)
+    {
+        _text = text;
+        _style = new Style(foreground, background);
+    }
+
+    public Measurement Measure(RenderOptions options, int maxWidth)
+    {
+        // Add 2 for padding (space on each side)
+        var width = _text.Length + 2;
+        return new Measurement(width, width);
+    }
+
+    public IEnumerable<Segment> Render(RenderOptions options, int maxWidth)
+    {
+        // Render padded text with our style
+        yield return new Segment($" {_text} ", _style);
+    }
+
+    private readonly string _text;
+    private readonly Style _style;
+}

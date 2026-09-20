@@ -1,0 +1,30 @@
+#!/usr/bin/env -S dotnet run --file 
+#:package Spectre.Console@0.57.2
+#:package Lestaly.General@0.145.0
+using Lestaly;
+using Spectre.Console;
+
+return await Paved.ProceedAsync(async () =>
+{
+    AnsiConsole.Status()
+        .Start("Initializing...", ctx =>
+        {
+            ctx.Status("Starting services...");
+            ctx.Spinner(Spinner.Known.Dots);
+            Thread.Sleep(1500);
+
+            ctx.Status("Loading modules...");
+            ctx.Spinner(Spinner.Known.Line);
+            Thread.Sleep(1500);
+
+            ctx.Status("Running diagnostics...");
+            ctx.Spinner(Spinner.Known.BouncingBar);
+            Thread.Sleep(1500);
+
+            ctx.Status("Finalizing...");
+            ctx.Spinner(Spinner.Known.Star);
+            Thread.Sleep(1000);
+
+            AnsiConsole.MarkupLine("[green]System ready![/]");
+        });
+});

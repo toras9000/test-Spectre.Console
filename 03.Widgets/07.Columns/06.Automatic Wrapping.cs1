@@ -1,0 +1,24 @@
+#!/usr/bin/env -S dotnet run --file 
+#:package Spectre.Console@0.57.2
+#:package Lestaly.General@0.145.0
+using Lestaly;
+using Spectre.Console;
+
+return await Paved.ProceedAsync(async () =>
+{
+    var items = new[]
+    {
+        new Panel("[blue]Dashboard[/]"),
+        new Panel("[green]Reports[/]"),
+        new Panel("[yellow]Settings[/]"),
+        new Panel("[red]Users[/]"),
+        new Panel("[purple]Analytics[/]"),
+        new Panel("[cyan]Notifications[/]"),
+        new Panel("[white]Profile[/]"),
+        new Panel("[grey]Help[/]")
+    };
+    
+    var columns = new Columns(items);
+    
+    AnsiConsole.Write(columns);
+});

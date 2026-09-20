@@ -1,0 +1,21 @@
+#!/usr/bin/env -S dotnet run --file 
+#:package Spectre.Console@0.57.2
+#:package Lestaly.General@0.145.0
+using Lestaly;
+using Spectre.Console;
+
+return await Paved.ProceedAsync(async () =>
+{
+    var items = new[]
+    {
+        "[blue]Azure[/]",
+        "[green]AWS[/]",
+        "[yellow]GCP[/]",
+        "[red]Oracle Cloud[/]",
+        "[purple]IBM Cloud[/]"
+    };
+
+    var columns = new Columns(items);
+
+    AnsiConsole.Write(columns);
+});

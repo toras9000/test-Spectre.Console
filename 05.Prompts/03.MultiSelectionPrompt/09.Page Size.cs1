@@ -1,0 +1,25 @@
+#!/usr/bin/env -S dotnet run --file 
+#:package Spectre.Console@0.57.2
+#:package Lestaly.General@0.145.0
+using Lestaly;
+using Spectre.Console;
+
+return await Paved.ProceedAsync(async () =>
+{
+    var frameworks = new[]
+    {
+        ".NET 6", ".NET 7", ".NET 8", ".NET 9",
+        "Java 17", "Java 21",
+        "Python 3.9", "Python 3.10", "Python 3.11", "Python 3.12",
+        "Node 18", "Node 20", "Node 22",
+        "Go 1.20", "Go 1.21", "Go 1.22"
+    };
+
+    var selected = AnsiConsole.Prompt(
+        new MultiSelectionPrompt<string>()
+            .Title("Select [green]supported runtimes[/]:")
+            .PageSize(5) // Show 5 items at a time
+            .AddChoices(frameworks));
+
+    AnsiConsole.MarkupLine($"[blue]Selected {selected.Count} runtime(s)[/]");
+});

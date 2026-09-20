@@ -1,0 +1,28 @@
+#!/usr/bin/env -S dotnet run --file 
+#:package Spectre.Console@0.57.2
+#:package Lestaly.General@0.145.0
+using Lestaly;
+using Spectre.Console;
+
+return await Paved.ProceedAsync(async () =>
+{
+    ShowBorder("Square", t => t.SquareBorder());
+    ShowBorder("Rounded", t => t.RoundedBorder());
+    ShowBorder("Minimal", t => t.MinimalBorder());
+    ShowBorder("Heavy", t => t.HeavyBorder());
+    ShowBorder("Double", t => t.DoubleBorder());
+    ShowBorder("ASCII", t => t.AsciiBorder());
+
+    static void ShowBorder(string name, Func<Table, Table> setBorder)
+    {
+        var table = new Table();
+        setBorder(table);
+
+        table.AddColumn("Border");
+        table.AddColumn("Style");
+        table.AddRow(name, "Example");
+
+        AnsiConsole.Write(table);
+        AnsiConsole.WriteLine();
+    }
+});

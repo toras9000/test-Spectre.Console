@@ -1,0 +1,28 @@
+#!/usr/bin/env -S dotnet run --file 
+#:package Spectre.Console@0.57.2
+#:package Lestaly.General@0.145.0
+using Lestaly;
+using Spectre.Console;
+
+return await Paved.ProceedAsync(async () =>
+{
+    var priority = new TextPrompt<int>("Select [green]priority[/] level:")
+        .AddChoice(1)
+        .AddChoice(2)
+        .AddChoice(3)
+        .AddChoice(4)
+        .AddChoice(5)
+        .WithConverter(level => level switch
+        {
+            1 => "Critical",
+            2 => "High",
+            3 => "Medium",
+            4 => "Low",
+            5 => "Trivial",
+            _ => level.ToString()
+        });
+
+    var result = AnsiConsole.Prompt(priority);
+
+    AnsiConsole.MarkupLine($"Priority level: [blue]{result}[/]");
+});

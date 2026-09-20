@@ -1,0 +1,28 @@
+#!/usr/bin/env -S dotnet run --file 
+#:package Spectre.Console@0.57.2
+#:package Lestaly.General@0.145.0
+using Lestaly;
+using Spectre.Console;
+
+return await Paved.ProceedAsync(async () =>
+{
+    var result = AnsiConsole.Live(new Text("Processing..."))
+        .Start(ctx =>
+        {
+            int total = 0;
+
+            for (int i = 1; i <= 10; i++)
+            {
+                total += i;
+                ctx.UpdateTarget(new Text($"Processing: {i}/10 (Total: {total})"));
+                Thread.Sleep(300);
+            }
+
+            ctx.UpdateTarget(new Text("[green]Complete![/]"));
+            Thread.Sleep(500);
+
+            return total;
+        });
+
+    AnsiConsole.WriteLine($"Final result: {result}");
+});

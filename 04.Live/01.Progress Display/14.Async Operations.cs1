@@ -1,0 +1,37 @@
+#!/usr/bin/env -S dotnet run --file 
+#:package Spectre.Console@0.57.2
+#:package Lestaly.General@0.145.0
+using Lestaly;
+using Spectre.Console;
+
+return await Paved.ProceedAsync(async () =>
+{
+    await AnsiConsole.Progress()
+        .StartAsync(async ctx =>
+        {
+            var task1 = ctx.AddTask("Async operation 1");
+            var task2 = ctx.AddTask("Async operation 2");
+
+            var operations = new[]
+            {
+                Task.Run(async () =>
+                {
+                    while (!task1.IsFinished)
+                    {
+                        task1.Increment(1);
+                        await Task.Delay(50);
+                    }
+                }),
+                Task.Run(async () =>
+                {
+                    while (!task2.IsFinished)
+                    {
+                        task2.Increment(0.8);
+                        await Task.Delay(60);
+                    }
+                })
+            };
+
+            await Task.WhenAll(operations);
+        });
+});

@@ -1,0 +1,22 @@
+#!/usr/bin/env -S dotnet run --file 
+#:package Spectre.Console@0.57.2
+#:package Lestaly.General@0.145.0
+using Lestaly;
+using Spectre.Console;
+
+return await Paved.ProceedAsync(async () =>
+{
+    var city = new TextPrompt<string>("What [yellow]city[/] do you live in?")
+        .PromptStyle(new Style(Color.Yellow))
+        .DefaultValue("London")
+        .DefaultValueStyle(new Style(Color.Green, decoration: Decoration.Italic))
+        .AddChoice("London")
+        .AddChoice("New York")
+        .AddChoice("Tokyo")
+        .AddChoice("Paris")
+        .ChoicesStyle(new Style(Color.Cyan));
+
+    var result = AnsiConsole.Prompt(city);
+
+    AnsiConsole.MarkupLine($"City: [blue]{result}[/]");
+});

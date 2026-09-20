@@ -1,0 +1,22 @@
+#!/usr/bin/env -S dotnet run --file 
+#:package Spectre.Console@0.57.2
+#:package Lestaly.General@0.145.0
+using Lestaly;
+using Spectre.Console;
+
+return await Paved.ProceedAsync(async () =>
+{
+    // Using params array
+    var prompt1 = new SelectionPrompt<string>()
+        .Title("Select a color (params)")
+        .AddChoices("Red", "Green", "Blue");
+
+    // Using IEnumerable
+    var colors = new[] { "Red", "Green", "Blue", "Yellow", "Purple" };
+    var prompt2 = new SelectionPrompt<string>()
+        .Title("Select a color (IEnumerable)")
+        .AddChoices(colors);
+
+    var selectedColor = AnsiConsole.Prompt(prompt2);
+    AnsiConsole.MarkupLine($"You selected: [bold]{selectedColor}[/]");
+});

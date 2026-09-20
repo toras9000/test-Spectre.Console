@@ -1,0 +1,20 @@
+#!/usr/bin/env -S dotnet run --file 
+#:package Spectre.Console.Testing@0.57.2
+#:package Lestaly.General@0.145.0
+using Lestaly;
+using Spectre.Console;
+using Spectre.Console.Testing;
+
+return await Paved.ProceedAsync(async () =>
+{
+    var testConsole = new TestConsole();
+    PrintGreeting(testConsole, "MY-NAME");
+
+    Console.WriteLine("------ TEST Output ----");
+    Console.WriteLine($"Output: {testConsole.Output}");
+});
+
+void PrintGreeting(IAnsiConsole console, string name)
+{
+    console.MarkupLine($"[green]Hello, {name}![/]");
+}

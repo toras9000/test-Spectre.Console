@@ -1,0 +1,25 @@
+#!/usr/bin/env -S dotnet run --file 
+#:package Spectre.Console@0.57.2
+#:package Lestaly.General@0.145.0
+using Lestaly;
+using Spectre.Console;
+
+return await Paved.ProceedAsync(async () =>
+{
+    var tree = new Tree("[yellow]MyProject[/]")
+        .Guide(TreeGuide.BoldLine)
+        .Style(Style.Parse("dim"));
+
+    var src = tree.AddNode("[blue]src[/]");
+    src.AddNode("[grey]Program.cs[/]");
+    src.AddNode("[grey]Startup.cs[/]");
+
+    var controllers = src.AddNode("[blue]Controllers[/]");
+    controllers.AddNode("[grey]HomeController.cs[/]");
+    controllers.AddNode("[grey]ApiController.cs[/]");
+
+    var tests = tree.AddNode("[green]tests[/]");
+    tests.AddNode("[grey]UnitTests.cs[/]");
+
+    AnsiConsole.Write(tree);
+});

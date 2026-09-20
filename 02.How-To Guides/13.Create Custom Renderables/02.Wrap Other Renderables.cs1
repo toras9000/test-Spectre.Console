@@ -1,0 +1,63 @@
+#!/usr/bin/env -S dotnet run --file 
+#:package Spectre.Console@0.57.2
+#:package Lestaly.General@0.145.0
+using Lestaly;
+using Spectre.Console;
+using Spectre.Console.Rendering;
+
+return await Paved.ProceedAsync(async () =>
+{
+    var success = new LabeledValue(new Text("OK"), new Text("100"));
+    var warning = new LabeledValue(new Text("WARN"), new Text("200"));
+    var error = new LabeledValue(new Text("ERROR"), new Text("300"));
+
+    AnsiConsole.Write(success);
+    AnsiConsole.Write(" ");
+    AnsiConsole.Write(warning);
+    AnsiConsole.Write(" ");
+    AnsiConsole.Write(error);
+    AnsiConsole.WriteLine();
+});
+
+public class LabeledValue : IRenderable
+{
+    private readonly IRenderable _label;
+    private readonly IRenderable _value;
+
+    public LabeledValue(IRenderable label, IRenderable value)
+    {
+        _label = label;
+        _value = value;
+    }
+
+    public Measurement Measure(RenderOptions options, int maxWidth)
+    {
+        var labelMeasure = _label.Measure(options, maxWidth);
+        var remaining = maxWidth - labelMeasure.Max - 1; // -1 for space
+        var valueMeasure = _value.Measure(options, Math.Max(0, remaining));
+
+        var min = labelMeasure.Min + 1 + valueMeasure.Min;
+        var max = labelMeasure.Max + 1 + valueMeasure.Max;
+        return new Measurement(min, max);
+    }
+
+    public IEnumerable<Segment> Render(RenderOptions options, int maxWidth)
+    {
+        // Render label
+        var labelMeasure = _label.Measure(options, maxWidth);
+        foreach (var segment in _label.Render(options, labelMeasure.Max))
+        {
+            yield return segment;
+        }
+
+        // Space between label and value
+        yield return new Segment(" ");
+
+        // Render value with remaining width
+        var remaining = maxWidth - labelMeasure.Max - 1;
+        foreach (var segment in _value.Render(options, Math.Max(0, remaining)))
+        {
+            yield return segment;
+        }
+    }
+}

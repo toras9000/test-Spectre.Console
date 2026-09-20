@@ -1,0 +1,26 @@
+#!/usr/bin/env -S dotnet run --file 
+#:package Spectre.Console@0.57.2
+#:package Lestaly.General@0.145.0
+using Lestaly;
+using Spectre.Console;
+
+return await Paved.ProceedAsync(async () =>
+{
+    AnsiConsole.Status()
+        .Start("Starting process...", ctx =>
+        {
+            ctx.Status("Loading configuration...");
+            Thread.Sleep(1000);
+
+            ctx.Status("Connecting to database...");
+            Thread.Sleep(1500);
+
+            ctx.Status("Fetching data...");
+            Thread.Sleep(1000);
+
+            ctx.Status("Processing records...");
+            Thread.Sleep(1500);
+
+            AnsiConsole.MarkupLine("[green]All tasks completed![/]");
+        });
+});

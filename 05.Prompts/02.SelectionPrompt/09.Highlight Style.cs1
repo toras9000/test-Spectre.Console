@@ -1,0 +1,16 @@
+#!/usr/bin/env -S dotnet run --file 
+#:package Spectre.Console@0.57.2
+#:package Lestaly.General@0.145.0
+using Lestaly;
+using Spectre.Console;
+
+return await Paved.ProceedAsync(async () =>
+{
+    var option = AnsiConsole.Prompt(
+        new SelectionPrompt<string>()
+            .Title("Select an option")
+            .HighlightStyle(new Style(Color.Green, Color.Black, Decoration.Bold))
+            .AddChoices("Option 1", "Option 2", "Option 3", "Option 4"));
+
+    AnsiConsole.MarkupLine($"You selected: [green]{option}[/]");
+});

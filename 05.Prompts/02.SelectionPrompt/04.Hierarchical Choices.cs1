@@ -1,0 +1,27 @@
+#!/usr/bin/env -S dotnet run --file 
+#:package Spectre.Console@0.57.2
+#:package Lestaly.General@0.145.0
+using Lestaly;
+using Spectre.Console;
+
+return await Paved.ProceedAsync(async () =>
+{
+    var country = AnsiConsole.Prompt(
+        new SelectionPrompt<string>()
+            .Title("Select your [green]destination[/]")
+            .PageSize(15)
+            .AddChoiceGroup("Europe", new[]
+            {
+            "France", "Germany", "Italy", "Spain", "United Kingdom"
+            })
+            .AddChoiceGroup("Asia", new[]
+            {
+            "China", "Japan", "South Korea", "Thailand", "Singapore"
+            })
+            .AddChoiceGroup("Americas", new[]
+            {
+            "United States", "Canada", "Mexico", "Brazil", "Argentina"
+            }));
+
+    AnsiConsole.MarkupLine($"Bon voyage to [yellow]{country}[/]!");
+});

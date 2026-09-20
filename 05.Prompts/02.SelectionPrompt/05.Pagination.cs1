@@ -1,0 +1,24 @@
+#!/usr/bin/env -S dotnet run --file 
+#:package Spectre.Console@0.57.2
+#:package Lestaly.General@0.145.0
+using Lestaly;
+using Spectre.Console;
+
+return await Paved.ProceedAsync(async () =>
+{
+    var cities = new[]
+    {
+        "New York", "Los Angeles", "Chicago", "Houston", "Phoenix",
+        "Philadelphia", "San Antonio", "San Diego", "Dallas", "San Jose",
+        "Austin", "Jacksonville", "Fort Worth", "Columbus", "Charlotte"
+    };
+
+    var city = AnsiConsole.Prompt(
+        new SelectionPrompt<string>()
+            .Title("Select a city")
+            .PageSize(5)
+            .MoreChoicesText("[grey](Use arrow keys to see more cities)[/]")
+            .AddChoices(cities));
+
+    AnsiConsole.MarkupLine($"You selected: [blue]{city}[/]");
+});

@@ -1,0 +1,27 @@
+#!/usr/bin/env -S dotnet run --file 
+#:package Spectre.Console@0.57.2
+#:package Lestaly.General@0.145.0
+using Lestaly;
+using Spectre.Console;
+
+return await Paved.ProceedAsync(async () =>
+{
+    // Create inner table
+    var innerTable = new Table()
+        .RoundedBorder()
+        .BorderColor(Color.Grey);
+    innerTable.AddColumn("Detail");
+    innerTable.AddColumn("Value");
+    innerTable.AddRow("CPU", "95%");
+    innerTable.AddRow("Memory", "12GB");
+
+    // Create outer table
+    var outerTable = new Table()
+        .SquareBorder();
+    outerTable.AddColumn("Server");
+    outerTable.AddColumn("Metrics");
+
+    outerTable.AddRow(new Text("server-01"), innerTable);
+
+    AnsiConsole.Write(outerTable);
+});

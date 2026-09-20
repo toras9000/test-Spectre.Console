@@ -1,0 +1,22 @@
+#!/usr/bin/env -S dotnet run --file 
+#:package Spectre.Console@0.57.2
+#:package Lestaly.General@0.145.0
+using Lestaly;
+using Spectre.Console;
+
+return await Paved.ProceedAsync(async () =>
+{
+    // User input that contains brackets
+    var userInput = "Use [brackets] for indexing";
+    var escaped = Markup.Escape(userInput);
+
+    // Safe to use in markup string
+    AnsiConsole.MarkupLine($"[blue]Input:[/] {escaped}");
+
+    // Common patterns that need escaping
+    var configKey = "settings[debug]";
+    var arrayRef = "items[0]";
+
+    AnsiConsole.MarkupLine($"[green]Config:[/] {Markup.Escape(configKey)}");
+    AnsiConsole.MarkupLine($"[green]Array:[/] {Markup.Escape(arrayRef)}");
+});

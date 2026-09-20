@@ -1,0 +1,26 @@
+#!/usr/bin/env -S dotnet run --file 
+#:package Spectre.Console@0.57.2
+#:package Lestaly.General@0.145.0
+using Lestaly;
+using Spectre.Console;
+
+return await Paved.ProceedAsync(async () =>
+{
+    AnsiConsole.Status()
+        .Spinner(Spinner.Known.Dots)
+        .Start("[yellow]Initializing[/]...", ctx =>
+        {
+            Thread.Sleep(1000);
+
+            ctx.Status("[blue]Connecting to [bold]API server[/][/]...");
+            Thread.Sleep(1500);
+
+            ctx.Status("[cyan]Authenticating user[/]...");
+            Thread.Sleep(1000);
+
+            ctx.Status("[green]Loading [italic]user preferences[/][/]...");
+            Thread.Sleep(1500);
+
+            AnsiConsole.MarkupLine("[bold green]Startup complete![/]");
+        });
+});

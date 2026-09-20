@@ -1,0 +1,22 @@
+#!/usr/bin/env -S dotnet run --file 
+#:package Spectre.Console@0.57.2
+#:package Lestaly.General@0.145.0
+using Lestaly;
+using Spectre.Console;
+
+return await Paved.ProceedAsync(async () =>
+{
+    var table = new Table();
+
+    // Add columns
+    table.AddColumn("Name");
+    table.AddColumn("Age");
+    table.AddColumn("City");
+
+    // Add rows
+    table.AddRow("Alice", "28", "New York");
+    table.AddRow("Bob", "35", "London");
+    table.AddRow("Charlie", "42", "Tokyo");
+
+    AnsiConsole.Write(table);
+});

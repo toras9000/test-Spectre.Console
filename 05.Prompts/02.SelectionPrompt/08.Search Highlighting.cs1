@@ -1,0 +1,27 @@
+#!/usr/bin/env -S dotnet run --file 
+#:package Spectre.Console@0.57.2
+#:package Lestaly.General@0.145.0
+using Lestaly;
+using Spectre.Console;
+
+return await Paved.ProceedAsync(async () =>
+{
+    var technologies = new[]
+    {
+        "ASP.NET Core", "Angular", "React", "Vue.js", "Node.js",
+        "Docker", "Kubernetes", "PostgreSQL", "MongoDB", "Redis",
+        "GraphQL", "gRPC", "RabbitMQ", "Kafka", "Elasticsearch"
+    };
+    
+    var prompt = new SelectionPrompt<string>()
+        .Title("Select a [green]technology[/]")
+        .PageSize(8)
+        .EnableSearch()
+        .SearchPlaceholderText("Type to filter...")
+        .AddChoices(technologies);
+    
+    prompt.SearchHighlightStyle = new Style(Color.Yellow, decoration: Decoration.Underline);
+    
+    var tech = AnsiConsole.Prompt(prompt);
+    AnsiConsole.MarkupLine($"You selected: [blue]{tech}[/]");
+});

@@ -1,0 +1,25 @@
+#!/usr/bin/env -S dotnet run --file 
+#:package Spectre.Console@0.57.2
+#:package Lestaly.General@0.145.0
+using Lestaly;
+using Spectre.Console;
+
+return await Paved.ProceedAsync(async () =>
+{
+    AnsiConsole.Progress()
+        .Columns(
+            new TaskDescriptionColumn(),
+            new ProgressBarColumn(),
+            new PercentageColumn(),
+            new SpinnerColumn())
+        .Start(ctx =>
+        {
+            var task = ctx.AddTask("Analyzing files");
+
+            while (!ctx.IsFinished)
+            {
+                task.Increment(0.8);
+                Thread.Sleep(60);
+            }
+        });
+});

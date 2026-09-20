@@ -1,0 +1,33 @@
+#!/usr/bin/env -S dotnet run --file 
+#:package Spectre.Console@0.57.2
+#:package Lestaly.General@0.145.0
+using Lestaly;
+using Spectre.Console;
+
+return await Paved.ProceedAsync(async () =>
+{
+    var table = new Table()
+        .AddColumn("Server")
+        .AddColumn("Status")
+        .AddColumn("Uptime");
+
+    AnsiConsole.Live(table)
+        .Start(ctx =>
+        {
+            var servers = new[]
+            {
+            ("web-01", "[green]Online[/]", "99.9%"),
+            ("web-02", "[green]Online[/]", "99.8%"),
+            ("db-01", "[green]Online[/]", "100%"),
+            ("cache-01", "[yellow]Degraded[/]", "95.2%"),
+            ("api-01", "[green]Online[/]", "99.7%")
+            };
+
+            foreach (var (server, status, uptime) in servers)
+            {
+                table.AddRow(server, status, uptime);
+                ctx.Refresh();
+                Thread.Sleep(500);
+            }
+        });
+});

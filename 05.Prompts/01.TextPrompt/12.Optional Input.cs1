@@ -1,0 +1,22 @@
+#!/usr/bin/env -S dotnet run --file 
+#:package Spectre.Console@0.57.2
+#:package Lestaly.General@0.145.0
+using Lestaly;
+using Spectre.Console;
+
+return await Paved.ProceedAsync(async () =>
+{
+    var nickname = new TextPrompt<string>("Enter your [green]nickname[/] (optional):")
+        .AllowEmpty();
+
+    var result = AnsiConsole.Prompt(nickname);
+
+    if (string.IsNullOrWhiteSpace(result))
+    {
+        AnsiConsole.MarkupLine("[yellow]No nickname provided[/]");
+    }
+    else
+    {
+        AnsiConsole.MarkupLine($"Nickname: [blue]{result}[/]");
+    }
+});

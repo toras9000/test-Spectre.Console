@@ -1,0 +1,43 @@
+#!/usr/bin/env -S dotnet run --file 
+#:package Spectre.Console@0.57.2
+#:package Lestaly.General@0.145.0
+using Lestaly;
+using Spectre.Console;
+
+return await Paved.ProceedAsync(async () =>
+{
+    var services = new[]
+    {
+        new CloudService("compute", "EC2 Instances", 0.10m),
+        new CloudService("storage", "S3 Storage", 0.023m),
+        new CloudService("database", "RDS Database", 0.17m),
+        new CloudService("cache", "ElastiCache", 0.05m),
+        new CloudService("cdn", "CloudFront CDN", 0.085m),
+        new CloudService("lambda", "Lambda Functions", 0.0000002m)
+    };
+
+    var selected = AnsiConsole.Prompt(
+        new MultiSelectionPrompt<CloudService>()
+            .Title("Select [green]cloud services[/] to provision:")
+            .UseConverter(service => $"{service.Name} (${service.HourlyRate:F3}/hr)")
+            .Required()
+            .AddChoices(services)
+            .Select(services[0])); // Pre-select EC2
+
+    AnsiConsole.WriteLine();
+    AnsiConsole.Write(new Rule("[yellow]Selected Services[/]"));
+
+    var totalCost = 0m;
+    foreach (var service in selected)
+    {
+        AnsiConsole.MarkupLine($"[blue]{service.Name}[/] ({service.Id})");
+        AnsiConsole.MarkupLine($"  Rate: [green]${service.HourlyRate:F4}/hour[/]");
+        totalCost += service.HourlyRate;
+    }
+
+    AnsiConsole.WriteLine();
+    AnsiConsole.MarkupLine($"[bold]Estimated hourly cost: [green]${totalCost:F4}[/][/]");
+    AnsiConsole.MarkupLine($"[dim]Monthly estimate (730 hours): ${totalCost * 730:F2}[/]");
+});
+
+record CloudService(string Id, string Name, decimal HourlyRate);

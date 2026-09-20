@@ -1,0 +1,36 @@
+#!/usr/bin/env -S dotnet run --file 
+#:package Spectre.Console@0.57.2
+#:package Lestaly.General@0.145.0
+using Lestaly;
+using Spectre.Console;
+
+return await Paved.ProceedAsync(async () =>
+{
+    var status = new Table()
+        .AddColumn("Operation")
+        .AddColumn("Status");
+    
+    await AnsiConsole.Live(status)
+        .StartAsync(async ctx =>
+        {
+            var operations = new[]
+            {
+                "Fetching data",
+                "Processing records",
+                "Updating database",
+                "Generating report",
+                "Sending notifications"
+            };
+    
+            foreach (var operation in operations)
+            {
+                status.AddRow(operation, "[yellow]In Progress[/]");
+                ctx.Refresh();
+    
+                await Task.Delay(1000);
+    
+                status.Rows.Update(status.Rows.Count - 1, 1, new Text("[green]Complete[/]"));
+                ctx.Refresh();
+            }
+        });
+});

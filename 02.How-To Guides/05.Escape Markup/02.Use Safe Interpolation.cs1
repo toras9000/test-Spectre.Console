@@ -1,0 +1,22 @@
+#!/usr/bin/env -S dotnet run --file 
+#:package Spectre.Console@0.57.2
+#:package Lestaly.General@0.145.0
+using Lestaly;
+using Spectre.Console;
+
+return await Paved.ProceedAsync(async () =>
+{
+    // Values that contain brackets are escaped automatically
+    var fileName = "config[backup].json";
+    var userName = "admin[test]";
+    var version = "v2.0[beta]";
+
+    // No manual escaping needed
+    AnsiConsole.MarkupLineInterpolated($"[blue]File:[/] {fileName}");
+    AnsiConsole.MarkupLineInterpolated($"[green]User:[/] {userName}");
+    AnsiConsole.MarkupLineInterpolated($"[yellow]Version:[/] {version}");
+
+    // Works with multiple interpolated values
+    AnsiConsole.MarkupLineInterpolated(
+        $"[dim]Loaded[/] {fileName} [dim]for user[/] {userName}");
+});

@@ -1,0 +1,33 @@
+#!/usr/bin/env -S dotnet run --file 
+#:package Spectre.Console@0.57.2
+#:package Lestaly.General@0.145.0
+using Lestaly;
+using Spectre.Console;
+
+return await Paved.ProceedAsync(async () =>
+{
+    var age = new TextPrompt<int>("What's your [green]age[/]?")
+        .Validate(age =>
+        {
+            if (age < 0)
+            {
+                return ValidationResult.Error("[red]Age cannot be negative[/]");
+            }
+
+            if (age > 120)
+            {
+                return ValidationResult.Error("[red]Please enter a realistic age[/]");
+            }
+
+            if (age < 18)
+            {
+                return ValidationResult.Error("[yellow]You must be 18 or older[/]");
+            }
+
+            return ValidationResult.Success();
+        });
+
+    var result = AnsiConsole.Prompt(age);
+
+    AnsiConsole.MarkupLine($"Age: [blue]{result}[/]");
+});

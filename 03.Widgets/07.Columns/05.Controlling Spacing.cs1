@@ -1,0 +1,37 @@
+#!/usr/bin/env -S dotnet run --file 
+#:package Spectre.Console@0.57.2
+#:package Lestaly.General@0.145.0
+using Lestaly;
+using Spectre.Console;
+
+return await Paved.ProceedAsync(async () =>
+{
+    AnsiConsole.MarkupLine("[yellow]Default padding (1 space on right):[/]");
+    var defaultPadding = new Columns(
+        new Panel("Alpha"),
+        new Panel("Beta"),
+        new Panel("Gamma"));
+    AnsiConsole.Write(defaultPadding);
+    
+    AnsiConsole.WriteLine();
+    AnsiConsole.MarkupLine("[yellow]Custom padding (2 spaces on left and right):[/]");
+    var customPadding = new Columns(
+        new Panel("Alpha"),
+        new Panel("Beta"),
+        new Panel("Gamma"))
+    {
+        Padding = new Padding(2, 0, 2, 0)
+    };
+    AnsiConsole.Write(customPadding);
+    
+    AnsiConsole.WriteLine();
+    AnsiConsole.MarkupLine("[yellow]No padding:[/]");
+    var noPadding = new Columns(
+        new Panel("Alpha"),
+        new Panel("Beta"),
+        new Panel("Gamma"))
+    {
+        Padding = new Padding(0, 0, 0, 0)
+    };
+    AnsiConsole.Write(noPadding);
+});

@@ -1,0 +1,23 @@
+#!/usr/bin/env -S dotnet run --file 
+#:package Spectre.Console@0.57.2
+#:package Lestaly.General@0.145.0
+using Lestaly;
+using Spectre.Console;
+
+return await Paved.ProceedAsync(async () =>
+{
+    var table = new Table()
+        .RoundedBorder()
+        .BorderColor(Color.Aqua)
+        .Title("[yellow]Monthly Sales Report[/]")
+        .Caption("[grey]Data as of October 2025[/]");
+
+    table.AddColumn("Month");
+    table.AddColumn("Revenue", col => col.RightAligned());
+
+    table.AddRow("August", "$45,000");
+    table.AddRow("September", "$52,000");
+    table.AddRow("October", "$48,500");
+
+    AnsiConsole.Write(table);
+});

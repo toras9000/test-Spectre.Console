@@ -1,0 +1,27 @@
+#!/usr/bin/env -S dotnet run --file 
+#:package Spectre.Console@0.57.2
+#:package Lestaly.General@0.145.0
+using Lestaly;
+using Spectre.Console;
+
+return await Paved.ProceedAsync(async () =>
+{
+    var countries = new[]
+    {
+        "Argentina", "Australia", "Brazil", "Canada", "China", "Egypt",
+        "France", "Germany", "India", "Italy", "Japan", "Mexico",
+        "Netherlands", "Russia", "South Africa", "South Korea", "Spain",
+        "Sweden", "Switzerland", "Thailand", "Turkey", "United Kingdom",
+        "United States", "Vietnam"
+    };
+    
+    var country = AnsiConsole.Prompt(
+        new SelectionPrompt<string>()
+            .Title("Select a [green]country[/]")
+            .PageSize(10)
+            .EnableSearch()
+            .SearchPlaceholderText("Type to search countries...")
+            .AddChoices(countries));
+    
+    AnsiConsole.MarkupLine($"You selected: [blue]{country}[/]");
+});

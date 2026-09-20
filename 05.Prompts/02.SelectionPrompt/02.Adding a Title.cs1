@@ -1,0 +1,15 @@
+#!/usr/bin/env -S dotnet run --file 
+#:package Spectre.Console@0.57.2
+#:package Lestaly.General@0.145.0
+using Lestaly;
+using Spectre.Console;
+
+return await Paved.ProceedAsync(async () =>
+{
+    var language = AnsiConsole.Prompt(
+        new SelectionPrompt<string>()
+            .Title("Which [green]programming language[/] do you prefer?")
+            .AddChoices("C#", "Python", "JavaScript", "Java", "Go"));
+
+    AnsiConsole.MarkupLine($"Great choice! [blue]{language}[/] is awesome.");
+});

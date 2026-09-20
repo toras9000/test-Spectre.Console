@@ -1,0 +1,22 @@
+#!/usr/bin/env -S dotnet run --file 
+#:package Spectre.Console.Testing@0.57.2
+#:package Lestaly.General@0.145.0
+using Lestaly;
+using Spectre.Console;
+using Spectre.Console.Testing;
+
+return await Paved.ProceedAsync(async () =>
+{
+    var testConsole = new TestConsole();
+    testConsole.Input.PushTextWithEnter("debug-text");
+
+    var result = PrintPrompt(testConsole);
+
+    Console.WriteLine("------ TEST Output ----");
+    Console.WriteLine($"Result: {result}");
+});
+
+string PrintPrompt(IAnsiConsole console)
+{
+    return console.Prompt(new TextPrompt<string>("What's your name?"));
+}

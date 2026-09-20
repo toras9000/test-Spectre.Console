@@ -1,0 +1,24 @@
+#!/usr/bin/env -S dotnet run --file 
+#:package Spectre.Console@0.57.2
+#:package Lestaly.General@0.145.0
+using Lestaly;
+using Spectre.Console;
+
+return await Paved.ProceedAsync(async () =>
+{
+    AnsiConsole.Write(new Markup("[yellow]Normal (collapsed) table:[/]\n"));
+    var normalTable = new Table();
+    normalTable.AddColumn("Name");
+    normalTable.AddColumn("Value");
+    normalTable.AddRow("Setting", "Value");
+    AnsiConsole.Write(normalTable);
+    
+    AnsiConsole.WriteLine();
+    AnsiConsole.Write(new Markup("[yellow]Expanded table:[/]\n"));
+    var expandedTable = new Table()
+        .Expand();
+    expandedTable.AddColumn("Name");
+    expandedTable.AddColumn("Value");
+    expandedTable.AddRow("Setting", "Value");
+    AnsiConsole.Write(expandedTable);
+});

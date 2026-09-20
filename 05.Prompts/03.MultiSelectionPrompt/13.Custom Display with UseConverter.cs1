@@ -1,0 +1,28 @@
+#!/usr/bin/env -S dotnet run --file 
+#:package Spectre.Console@0.57.2
+#:package Lestaly.General@0.145.0
+using Lestaly;
+using Spectre.Console;
+
+return await Paved.ProceedAsync(async () =>
+{
+    var environments = new Dictionary<string, string>
+    {
+        { "dev", "Development (localhost)" },
+        { "qa", "Quality Assurance (qa.example.com)" },
+        { "stage", "Staging (staging.example.com)" },
+        { "prod", "Production (example.com)" }
+    };
+    
+    var selected = AnsiConsole.Prompt(
+        new MultiSelectionPrompt<string>()
+            .Title("Select [green]deployment targets[/]:")
+            .UseConverter(key => environments[key])
+            .AddChoices(environments.Keys));
+    
+    AnsiConsole.WriteLine("Deploying to:");
+    foreach (var env in selected)
+    {
+        AnsiConsole.WriteLine($"- {env}: {environments[env]}");
+    }
+});

@@ -1,0 +1,28 @@
+#!/usr/bin/env -S dotnet run --file 
+#:package Spectre.Console@0.57.2
+#:package Lestaly.General@0.145.0
+using Lestaly;
+using Spectre.Console;
+
+return await Paved.ProceedAsync(async () =>
+{
+    var category = AnsiConsole.Prompt(
+        new SelectionPrompt<string>()
+            .Title("Select a [green]category or item[/]")
+            .PageSize(15)
+            .Mode(SelectionMode.Independent)
+            .AddChoiceGroup("Electronics", new[]
+            {
+                "Laptops", "Smartphones", "Tablets"
+            })
+            .AddChoiceGroup("Clothing", new[]
+            {
+                "Shirts", "Pants", "Shoes"
+            })
+            .AddChoiceGroup("Books", new[]
+            {
+                "Fiction", "Non-Fiction", "Science"
+            }));
+    
+    AnsiConsole.MarkupLine($"You selected: [yellow]{category}[/]");
+});

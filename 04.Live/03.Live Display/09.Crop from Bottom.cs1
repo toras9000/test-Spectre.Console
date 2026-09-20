@@ -1,0 +1,24 @@
+#!/usr/bin/env -S dotnet run --file 
+#:package Spectre.Console@0.57.2
+#:package Lestaly.General@0.145.0
+using Lestaly;
+using Spectre.Console;
+
+return await Paved.ProceedAsync(async () =>
+{
+    var table = new Table()
+        .AddColumn("Task Queue");
+
+    AnsiConsole.Live(table)
+        .Overflow(VerticalOverflow.Crop)
+        .Cropping(VerticalOverflowCropping.Bottom)
+        .Start(ctx =>
+        {
+            for (int i = 1; i <= 50; i++)
+            {
+                table.AddRow($"Task {i}: Processing");
+                ctx.Refresh();
+                Thread.Sleep(100);
+            }
+        });
+});

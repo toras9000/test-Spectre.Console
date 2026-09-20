@@ -1,0 +1,26 @@
+#!/usr/bin/env -S dotnet run --file 
+#:package Spectre.Console@0.57.2
+#:package Lestaly.General@0.145.0
+using Lestaly;
+using Spectre.Console;
+
+return await Paved.ProceedAsync(async () =>
+{
+    AnsiConsole.Progress()
+        .Columns(
+            new TaskDescriptionColumn(),
+            new ProgressBarColumn(),
+            new DownloadedColumn(),
+            new TransferSpeedColumn(),
+            new RemainingTimeColumn())
+        .Start(ctx =>
+        {
+            var task = ctx.AddTask("game-installer.exe", maxValue: 524288000); // 500 MB in bytes
+
+            while (!ctx.IsFinished)
+            {
+                task.Increment(2621440); // 2.5 MB per tick
+                Thread.Sleep(50);
+            }
+        });
+});

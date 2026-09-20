@@ -1,0 +1,19 @@
+#!/usr/bin/env -S dotnet run --file 
+#:package Spectre.Console@0.57.2
+#:package Lestaly.General@0.145.0
+using Lestaly;
+using Spectre.Console;
+
+return await Paved.ProceedAsync(async () =>
+{
+    var selected = AnsiConsole.Prompt(
+        new MultiSelectionPrompt<string>()
+            .Title("Which [green]features[/] do you want to enable?")
+            .AddChoices("Logging", "Caching", "Compression", "Authentication"));
+
+    AnsiConsole.WriteLine("You selected:");
+    foreach (var item in selected)
+    {
+        AnsiConsole.WriteLine($"- {item}");
+    }
+});

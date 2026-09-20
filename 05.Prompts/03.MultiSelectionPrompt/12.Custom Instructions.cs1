@@ -1,0 +1,22 @@
+#!/usr/bin/env -S dotnet run --file 
+#:package Spectre.Console@0.57.2
+#:package Lestaly.General@0.145.0
+using Lestaly;
+using Spectre.Console;
+
+return await Paved.ProceedAsync(async () =>
+{
+    var selected = AnsiConsole.Prompt(
+        new MultiSelectionPrompt<string>()
+            .Title("Select [green]modules[/] to load:")
+            .InstructionsText("[grey](Press [blue]<space>[/] to toggle, [green]<enter>[/] to confirm)[/]")
+            .MoreChoicesText("[grey](Move up and down to see more modules)[/]")
+            .PageSize(3)
+            .AddChoices("Core", "Security", "Analytics", "Reporting", "Integration", "Automation"));
+
+    AnsiConsole.WriteLine("Modules to load:");
+    foreach (var module in selected)
+    {
+        AnsiConsole.WriteLine($"- {module}");
+    }
+});

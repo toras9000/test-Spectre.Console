@@ -1,0 +1,19 @@
+#!/usr/bin/env -S dotnet run --file 
+#:package Spectre.Console@0.57.2
+#:package Lestaly.General@0.145.0
+using Lestaly;
+using Spectre.Console;
+
+return await Paved.ProceedAsync(async () =>
+{
+    var styled = "[bold red]Error:[/] Connection to [blue]database[/] failed";
+
+    // Remove all markup tags for plain text
+    var plain = Markup.Remove(styled);
+
+    AnsiConsole.MarkupLine("[dim]Styled output:[/]");
+    AnsiConsole.MarkupLine(styled);
+
+    AnsiConsole.MarkupLine("[dim]Plain text for logs:[/]");
+    AnsiConsole.WriteLine(plain);
+});

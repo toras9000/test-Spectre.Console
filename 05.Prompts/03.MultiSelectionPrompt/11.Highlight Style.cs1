@@ -1,0 +1,20 @@
+#!/usr/bin/env -S dotnet run --file 
+#:package Spectre.Console@0.57.2
+#:package Lestaly.General@0.145.0
+using Lestaly;
+using Spectre.Console;
+
+return await Paved.ProceedAsync(async () =>
+{
+    var selected = AnsiConsole.Prompt(
+        new MultiSelectionPrompt<string>()
+            .Title("Select [green]log levels[/] to enable:")
+            .HighlightStyle(new Style(Color.Yellow, decoration: Decoration.Bold))
+            .AddChoices("Trace", "Debug", "Information", "Warning", "Error", "Critical"));
+
+    AnsiConsole.WriteLine("Enabled log levels:");
+    foreach (var level in selected)
+    {
+        AnsiConsole.WriteLine($"- {level}");
+    }
+});

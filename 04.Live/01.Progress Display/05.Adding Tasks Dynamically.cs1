@@ -1,0 +1,31 @@
+#!/usr/bin/env -S dotnet run --file 
+#:package Spectre.Console@0.57.2
+#:package Lestaly.General@0.145.0
+using Lestaly;
+using Spectre.Console;
+
+return await Paved.ProceedAsync(async () =>
+{
+    AnsiConsole.Progress()
+        .Start(ctx =>
+        {
+            var scan = ctx.AddTask("Scanning directory");
+
+            while (!scan.IsFinished)
+            {
+                scan.Increment(2);
+                Thread.Sleep(50);
+            }
+
+            // After scanning, add new tasks for found items
+            var process1 = ctx.AddTask("Processing report.pdf");
+            var process2 = ctx.AddTask("Processing data.xlsx");
+
+            while (!ctx.IsFinished)
+            {
+                process1.Increment(1.5);
+                process2.Increment(1.2);
+                Thread.Sleep(50);
+            }
+        });
+});

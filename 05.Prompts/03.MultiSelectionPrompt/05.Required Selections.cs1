@@ -1,0 +1,25 @@
+#!/usr/bin/env -S dotnet run --file 
+#:package Spectre.Console@0.57.2
+#:package Lestaly.General@0.145.0
+using Lestaly;
+using Spectre.Console;
+
+return await Paved.ProceedAsync(async () =>
+{
+    // Required: User must select at least one
+    var requiredSelection = AnsiConsole.Prompt(
+        new MultiSelectionPrompt<string>()
+            .Title("Select at least [red]one[/] export format:")
+            .Required()
+            .AddChoices("PDF", "CSV", "JSON", "XML"));
+
+    // Not required: User can select none
+    var optionalSelection = AnsiConsole.Prompt(
+        new MultiSelectionPrompt<string>()
+            .Title("Select [green]optional[/] post-processing steps:")
+            .NotRequired()
+            .AddChoices("Validate data", "Send email", "Archive results"));
+
+    AnsiConsole.MarkupLine($"[blue]Required selections: {requiredSelection.Count}[/]");
+    AnsiConsole.MarkupLine($"[blue]Optional selections: {optionalSelection.Count}[/]");
+});

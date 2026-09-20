@@ -1,0 +1,23 @@
+#!/usr/bin/env -S dotnet run --file 
+#:package Spectre.Console@0.57.2
+#:package Lestaly.General@0.145.0
+using Lestaly;
+using Spectre.Console;
+
+return await Paved.ProceedAsync(async () =>
+{
+    AnsiConsole.Progress()
+        .AutoClear(true)
+        .Start(ctx =>
+        {
+            var task = ctx.AddTask("Temporary operation");
+
+            while (!ctx.IsFinished)
+            {
+                task.Increment(2);
+                Thread.Sleep(50);
+            }
+        });
+
+    AnsiConsole.MarkupLine("[green]Operation complete![/]");
+});

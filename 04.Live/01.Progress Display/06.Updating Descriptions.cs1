@@ -1,0 +1,21 @@
+#!/usr/bin/env -S dotnet run --file 
+#:package Spectre.Console@0.57.2
+#:package Lestaly.General@0.145.0
+using Lestaly;
+using Spectre.Console;
+
+return await Paved.ProceedAsync(async () =>
+{
+    AnsiConsole.Progress()
+        .Start(ctx =>
+        {
+            var task = ctx.AddTask("Processing", maxValue: 100);
+
+            for (int i = 1; i <= 100; i++)
+            {
+                task.Description = $"Processing file {i} of 100";
+                task.Increment(1);
+                Thread.Sleep(30);
+            }
+        });
+});

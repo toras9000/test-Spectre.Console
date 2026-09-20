@@ -1,0 +1,21 @@
+#!/usr/bin/env -S dotnet run --file 
+#:package Spectre.Console@0.57.2
+#:package Lestaly.General@0.145.0
+using Lestaly;
+using Spectre.Console;
+
+return await Paved.ProceedAsync(async () =>
+{
+    var table = new Table()
+        .HideHeaders()
+        .Border(TableBorder.None);
+
+    table.AddColumn("Key");
+    table.AddColumn("Value");
+
+    table.AddRow("[blue]Name:[/]", "Application");
+    table.AddRow("[blue]Version:[/]", "1.0.0");
+    table.AddRow("[blue]Status:[/]", "[green]Running[/]");
+
+    AnsiConsole.Write(table);
+});

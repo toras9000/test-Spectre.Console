@@ -1,0 +1,24 @@
+#!/usr/bin/env -S dotnet run --file 
+#:package Spectre.Console@0.57.2
+#:package Lestaly.General@0.145.0
+using Lestaly;
+using Spectre.Console;
+
+return await Paved.ProceedAsync(async () =>
+{
+    var prompt = new SelectionPrompt<string>()
+        .Title("Select a [green]sport[/]")
+        .AddChoiceGroup("Team Sports", new[]
+        {
+            "Basketball", "Soccer", "Baseball", "Volleyball"
+        })
+        .AddChoiceGroup("Individual Sports", new[]
+        {
+            "Tennis", "Swimming", "Running", "Cycling"
+        });
+    
+    prompt.DisabledStyle = new Style(Color.Grey, decoration: Decoration.Italic);
+    
+    var sport = AnsiConsole.Prompt(prompt);
+    AnsiConsole.MarkupLine($"You chose: [yellow]{sport}[/]");
+});

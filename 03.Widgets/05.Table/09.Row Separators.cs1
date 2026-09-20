@@ -1,0 +1,23 @@
+#!/usr/bin/env -S dotnet run --file 
+#:package Spectre.Console@0.57.2
+#:package Lestaly.General@0.145.0
+using Lestaly;
+using Spectre.Console;
+
+return await Paved.ProceedAsync(async () =>
+{
+    var table = new Table()
+        .RoundedBorder()
+        .ShowRowSeparators();
+    
+    table.AddColumn("Category");
+    table.AddColumn("Item");
+    table.AddColumn("Count", col => col.RightAligned());
+    
+    table.AddRow("Fruits", "Apples", "10");
+    table.AddRow("Fruits", "Oranges", "5");
+    table.AddRow("Vegetables", "Carrots", "15");
+    table.AddRow("Vegetables", "Broccoli", "8");
+    
+    AnsiConsole.Write(table);
+});

@@ -1,0 +1,29 @@
+#!/usr/bin/env -S dotnet run --file 
+#:package Spectre.Console@0.57.2
+#:package Lestaly.General@0.145.0
+using Lestaly;
+using Spectre.Console;
+
+return await Paved.ProceedAsync(async () =>
+{
+    AnsiConsole.Progress()
+        .Columns(
+            new TaskDescriptionColumn(),
+            new ProgressBarColumn()
+            {
+                CompletedStyle = new Style(Color.Green),
+                FinishedStyle = new Style(Color.Lime),
+                RemainingStyle = new Style(Color.Grey)
+            },
+            new PercentageColumn())
+        .Start(ctx =>
+        {
+            var task = ctx.AddTask("Building project");
+
+            while (!ctx.IsFinished)
+            {
+                task.Increment(1);
+                Thread.Sleep(40);
+            }
+        });
+});

@@ -1,0 +1,16 @@
+#!/usr/bin/env -S dotnet run --file 
+#:package Spectre.Console@0.57.2
+#:package Lestaly.General@0.145.0
+using Lestaly;
+using Spectre.Console;
+
+return await Paved.ProceedAsync(async () =>
+{
+    var fileName = "Authentication.cs";
+    var dependency = "Newtonsoft.Json";
+
+    AnsiConsole.MarkupLine("[green]✓ Build completed successfully[/]");
+    AnsiConsole.MarkupLineInterpolated($"[#FFA500]⚠[/] [yellow]3 warnings[/] in {fileName}");
+    AnsiConsole.MarkupLineInterpolated($"[bold red]✗ Error:[/] Missing dependency '{dependency}'");
+    AnsiConsole.MarkupLine("  → See: [link=https://docs.example.com/dependencies]documentation[/]");
+});

@@ -1,0 +1,28 @@
+#!/usr/bin/env -S dotnet run --file 
+#:package Spectre.Console@0.57.2
+#:package Lestaly.General@0.145.0
+using Lestaly;
+using Spectre.Console;
+
+return await Paved.ProceedAsync(async () =>
+{
+    var file = AnsiConsole.Prompt(
+        new SelectionPrompt<string>()
+            .Title("Select a [green]file[/]")
+            .PageSize(15)
+            .Mode(SelectionMode.Leaf)
+            .AddChoiceGroup("Documents", new[]
+            {
+                "Resume.pdf", "CoverLetter.docx", "References.txt"
+            })
+            .AddChoiceGroup("Images", new[]
+            {
+                "Photo1.jpg", "Photo2.png", "Logo.svg"
+            })
+            .AddChoiceGroup("Code", new[]
+            {
+                "Program.cs", "Helpers.cs", "README.md"
+            }));
+    
+    AnsiConsole.MarkupLine($"Opening: [blue]{file}[/]");
+});

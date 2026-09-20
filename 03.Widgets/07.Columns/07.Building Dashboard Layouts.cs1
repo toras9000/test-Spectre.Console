@@ -1,0 +1,23 @@
+#!/usr/bin/env -S dotnet run --file 
+#:package Spectre.Console@0.57.2
+#:package Lestaly.General@0.145.0
+using Lestaly;
+using Spectre.Console;
+
+return await Paved.ProceedAsync(async () =>
+{
+    // Metrics row
+    var metrics = new Columns(
+        new Panel("[green]Active Users\n1,234[/]").Header("Metrics"),
+        new Panel("[blue]Page Views\n45,678[/]").Header("Metrics"),
+        new Panel("[yellow]Revenue\n$12,345[/]").Header("Metrics"));
+
+    // Status row
+    var status = new Columns(
+        new Panel("API: [green]Operational[/]\nDB: [green]Operational[/]").Header("System Status"),
+        new Panel("CPU: 45%\nRAM: 67%").Header("Resources"));
+
+    AnsiConsole.Write(metrics);
+    AnsiConsole.WriteLine();
+    AnsiConsole.Write(status);
+});

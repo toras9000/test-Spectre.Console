@@ -1,0 +1,14 @@
+#!/usr/bin/env -S dotnet run --file 
+#:package Spectre.Console@0.57.2
+#:package Lestaly.General@0.145.0
+using Lestaly;
+using Spectre.Console;
+
+return await Paved.ProceedAsync(async () =>
+{
+    AnsiConsole.Write(new BarChart()
+        .Label("[green]Sales by Region[/]")
+        .AddItem("North", 85, Color.Blue)
+        .AddItem("South", 62, Color.Yellow)
+        .AddItem("West", 94, Color.Green));
+});

@@ -1,0 +1,55 @@
+#!/usr/bin/env -S dotnet run --file 
+#:package Spectre.Console@0.57.2
+#:package Lestaly.General@0.145.0
+using Lestaly;
+using Spectre.Console;
+
+return await Paved.ProceedAsync(async () =>
+{
+    var projects = new[]
+    {
+        new Project { Name = "E-Commerce Platform", Status = "Active", Priority = "High" },
+        new Project { Name = "Mobile App Redesign", Status = "Active", Priority = "Medium" },
+        new Project { Name = "API Gateway", Status = "Planning", Priority = "High" },
+        new Project { Name = "Customer Portal", Status = "Active", Priority = "Low" },
+        new Project { Name = "Analytics Dashboard", Status = "Completed", Priority = "Medium" },
+        new Project { Name = "Payment Integration", Status = "Active", Priority = "High" },
+        new Project { Name = "User Authentication", Status = "Completed", Priority = "High" },
+        new Project { Name = "Email Service", Status = "Planning", Priority = "Low" }
+    };
+
+    var prompt = new SelectionPrompt<Project>()
+        .Title("Select a [green]project[/] to view details")
+        .PageSize(6)
+        .MoreChoicesText("[grey](Move up and down to see more projects)[/]")
+        .EnableSearch()
+        .SearchPlaceholderText("Type to search projects...")
+        .WrapAround()
+        .HighlightStyle(new Style(Color.Cyan1, decoration: Decoration.Bold))
+        .UseConverter(p => $"[bold]{p.Name}[/] - {p.Status} [{GetPriorityColor(p.Priority)}]{p.Priority}[/]")
+        .AddChoices(projects);
+
+    prompt.SearchHighlightStyle = new Style(Color.Yellow, decoration: Decoration.Underline);
+
+    var selected = AnsiConsole.Prompt(prompt);
+
+    AnsiConsole.WriteLine();
+    AnsiConsole.Write(new Panel($"[bold]{selected.Name}[/]\nStatus: {selected.Status}\nPriority: {selected.Priority}")
+        .Header("Project Details")
+        .BorderColor(Color.Cyan1));
+});
+
+string GetPriorityColor(string priority) => priority switch
+{
+    "Low" => "Gray",
+    "Medium" => "Blue",
+    "High" => "Yellow",
+    _ => "White",
+};
+
+class Project
+{
+    public required string Name { get; init; }
+    public required string Status { get; init; }
+    public required string Priority { get; init; }
+}
